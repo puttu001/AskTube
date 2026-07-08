@@ -117,3 +117,9 @@ client/src/
   hooks/       # state/business logic (ingestion, chat, history, theme)
   components/  # presentation only (Sidebar, VideoLoader, ChatView, HistoryList)
 ```
+
+
+Demonstration:
+![Dashboard](image.png)
+![Chat Window](image-1.png)
+![Chat-History](image-2.png)
