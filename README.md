@@ -118,10 +118,6 @@ client/src/
   components/  # presentation only (Sidebar, VideoLoader, ChatView, HistoryList)
 ```
 
-
-Demonstration:
 <img width="300" height="140" alt="image" src="https://github.com/user-attachments/assets/b1b82054-c97e-444a-a4c3-f5bb2d3624ca" />
 <img width="300" height="140" alt="image" src="https://github.com/user-attachments/assets/f356209f-6d79-48b5-bd32-3d2a78245b9a" />
 <img width="300" height="140" alt="image" src="https://github.com/user-attachments/assets/91ef83ab-0e20-49a6-ba19-c9b67fedd5cf" />
-
-
