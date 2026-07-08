@@ -27,10 +27,8 @@ That's the entire interaction.
 
 ## Why this isn't deployed live
 
-This started as a plan for a fully hosted product (FastAPI + React, deployed, with Google
-login, per-user accounts, etc.), but building and testing that surfaced a few problems that
-make a public, always-on deployment a much bigger undertaking than "just deploy it":
-The main obstacle from deploying it live is that:
+This started as a plan for a fully hosted product (FastAPI + React, deployed), but building and testing that surfaced a few problems that
+becomes a unsolvable issue. The main obstacle from deploying it live was:
 
 - **YouTube blocks transcript requests from datacenter IPs.** Confirmed directly — fetching
   transcripts from a cloud host (Render, AWS, GCP, etc.) gets throttled/blocked in a way it
@@ -50,7 +48,7 @@ just you, and there's no account system to secure).
 ### 1. Clone and configure
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/puttu001/AskTube.git
 cd AskTube
 cp .env.example .env
 ```
