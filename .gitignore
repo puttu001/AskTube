@@ -1,0 +1,10 @@
+.env
+plan.md
+notes.txt
+__pycache__
+*.pyc
+.venv/
+venv/
+server/data/
+node_modules/
+client/dist/

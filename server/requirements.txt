@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+yt-dlp
+openai
+qdrant-client
+tiktoken
