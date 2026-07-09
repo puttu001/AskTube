@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { askQuestion, getChatHistory } from "../api/chat";
+import { getChatHistory, streamAnswer } from "../api/chat";
 
 export function useChat(videoId) {
   const [messages, setMessages] = useState([]);
@@ -20,13 +20,24 @@ export function useChat(videoId) {
     async (question) => {
       if (!videoId) return;
       setError(null);
-      setMessages((prev) => [...prev, { role: "user", content: question }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "user", content: question },
+        { role: "assistant", content: "" },
+      ]);
       setIsSending(true);
       try {
-        const { answer } = await askQuestion(videoId, question);
-        setMessages((prev) => [...prev, { role: "assistant", content: answer }]);
+        for await (const chunk of streamAnswer(videoId, question)) {
+          setMessages((prev) => {
+            const next = [...prev];
+            const last = next[next.length - 1];
+            next[next.length - 1] = { ...last, content: last.content + chunk };
+            return next;
+          });
+        }
       } catch (err) {
         setError(err.message || "Something went wrong");
+        setMessages((prev) => prev.slice(0, -1));
       } finally {
         setIsSending(false);
       }

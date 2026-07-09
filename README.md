@@ -15,6 +15,15 @@ somewhere in a 40-minute video, you either watch the whole thing or scrub around
 - **Anyone else**: research videos, talks, podcasts, reviews — ask the video a question
   directly and get an answer grounded in what was actually said, with no rewatching required.
 
+## Features
+
+- **Chat history** — every question and answer is saved (SQLite), so reopening a video picks up right where you left off.
+- **One chat per video** — pasting the same URL again doesn't start a new thread; it resumes the same ongoing conversation for that video, no matter how many times you paste it.
+- **Markdown-formatted answers** — headings, bold text, and lists render properly instead of showing raw `**`/`#` characters.
+- **Streaming responses** — answers appear token-by-token as they're generated, not as one delayed block of text.
+- **Suggested starter prompts** — one-click prompts (summarize, main theme, key takeaways, etc.) for when you don't know what to ask first.
+- **Fully local and private** — everything runs on your machine; nothing is uploaded except the transcript text sent to OpenAI for embeddings/answers.
+
 ## How to use it
 
 1. Paste a YouTube URL.

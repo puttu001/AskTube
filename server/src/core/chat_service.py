@@ -1,9 +1,11 @@
+from collections.abc import Iterator
+
 from src.clients.embeddings import embed_texts
-from src.clients.llm import generate_answer
+from src.clients.llm import stream_answer
 from src.config.settings import settings
+from src.prompts.template import SYSTEM_PROMPT
 from src.storage import sqlite_store as db
 from src.storage import vector_store
-from src.prompts.template import SYSTEM_PROMPT
 
 
 def _format_timestamp(seconds: float | None) -> str:
@@ -17,7 +19,7 @@ def _format_timestamp(seconds: float | None) -> str:
     return f"{m:02d}:{s:02d}"
 
 
-def answer_question(video_id: str, question: str) -> str:
+def stream_answer_question(video_id: str, question: str) -> Iterator[str]:
     query_embedding = embed_texts([question])[0]
     matches = vector_store.search(video_id, query_embedding, settings.retrieval_top_k)
 
@@ -26,8 +28,11 @@ def answer_question(video_id: str, question: str) -> str:
     )
     user_prompt = f"Transcript excerpts:\n{context}\n\nQuestion: {question}"
 
-    answer = generate_answer(SYSTEM_PROMPT, user_prompt)
-
     db.add_message(video_id, "user", question)
-    db.add_message(video_id, "assistant", answer)
-    return answer
+
+    chunks = []
+    for delta in stream_answer(SYSTEM_PROMPT, user_prompt):
+        chunks.append(delta)
+        yield delta
+
+    db.add_message(video_id, "assistant", "".join(chunks))

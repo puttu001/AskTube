@@ -20,7 +20,3 @@ class ChatRequest(BaseModel):
 class ChatMessage(BaseModel):
     role: str
     content: str
-
-
-class ChatResponse(BaseModel):
-    answer: str

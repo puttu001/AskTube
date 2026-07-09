@@ -1,5 +1,6 @@
 import { MessageCircle, Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const SUGGESTED_PROMPTS = [
   "Summarize this video",
@@ -69,10 +70,18 @@ export function ChatView({ video, messages, isSending, error, onSend }) {
 
           {messages.length > 0 && (
             <div className="space-y-4">
-              {messages.map((m, i) => (
-                <MessageBubble key={i} role={m.role} content={m.content} />
-              ))}
-              {isSending && <MessageBubble role="assistant" content="Thinking..." pending />}
+              {messages.map((m, i) => {
+                const isLast = i === messages.length - 1;
+                const isPending = isLast && isSending && m.role === "assistant" && !m.content;
+                return (
+                  <MessageBubble
+                    key={i}
+                    role={m.role}
+                    content={isPending ? "Thinking..." : m.content}
+                    pending={isPending}
+                  />
+                );
+              })}
             </div>
           )}
 
@@ -107,13 +116,19 @@ function MessageBubble({ role, content, pending = false }) {
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
+        className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
           isUser
-            ? "bg-gradient-to-r from-fuchsia-500 to-violet-600 text-white"
+            ? "bg-gradient-to-r from-fuchsia-500 to-violet-600 text-white whitespace-pre-wrap"
             : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200"
         } ${pending ? "animate-pulse" : ""}`}
       >
-        {content}
+        {isUser ? (
+          content
+        ) : (
+          <div className="prose prose-sm dark:prose-invert max-w-none prose-p:my-2 first:prose-p:mt-0 last:prose-p:mb-0 prose-headings:my-2 prose-ul:my-2 prose-ol:my-2">
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
+        )}
       </div>
     </div>
   );
