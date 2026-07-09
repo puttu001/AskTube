@@ -3,12 +3,7 @@ from src.clients.llm import generate_answer
 from src.config.settings import settings
 from src.storage import sqlite_store as db
 from src.storage import vector_store
-
-SYSTEM_PROMPT = (
-    "You are a study assistant answering questions about a YouTube video's transcript. "
-    "Use only the provided transcript excerpts to answer. If the excerpts don't contain "
-    "the answer, say you don't know based on the video."
-)
+from src.prompts.template import SYSTEM_PROMPT
 
 
 def _format_timestamp(seconds: float | None) -> str:

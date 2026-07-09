@@ -7,7 +7,7 @@ export function HistoryList({ videos, isLoading, onRefresh, onSelect }) {
   }, [onRefresh]);
 
   return (
-    <section className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 flex-1 overflow-y-auto">
+    <section className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-6 flex-1 overflow-y-auto">
       <h3 className="font-semibold text-slate-900 dark:text-white mb-4">History</h3>
 
       {isLoading && <p className="text-sm text-slate-400">Loading...</p>}

@@ -1,3 +1,4 @@
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { Sidebar } from "./components/layout/Sidebar";
 import { VideoLoader } from "./components/video/VideoLoader";
@@ -13,6 +14,7 @@ import { useVideoHistory } from "./hooks/useVideoHistory";
 export default function App() {
   const { theme, toggleTheme } = useTheme();
   const [view, setView] = useState("new");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { video, isSubmitting, loadVideo, setActiveVideo, reset } = useVideoIngestion();
   const activeVideoId = video?.status === "ready" ? video.video_id : null;
@@ -72,11 +74,25 @@ export default function App() {
         onNavigateHistory={() => setView("history")}
         theme={theme}
         onToggleTheme={toggleTheme}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
-      <main className="flex-1 min-w-0 flex flex-col gap-6 p-6 h-screen overflow-hidden">
-        {renderMain()}
-      </main>
+      <div className="flex-1 min-w-0 flex flex-col h-screen overflow-hidden">
+        <div className="md:hidden flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shrink-0">
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-1 text-slate-500 dark:text-slate-300"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+          <span className="font-semibold text-slate-900 dark:text-white">AskTube</span>
+        </div>
+
+        <main className="flex-1 min-w-0 min-h-0 flex flex-col gap-4 md:gap-6 p-4 md:p-6 overflow-hidden">
+          {renderMain()}
+        </main>
+      </div>
     </div>
   );
 }

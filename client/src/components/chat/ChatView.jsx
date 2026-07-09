@@ -40,7 +40,7 @@ export function ChatView({ video, messages, isSending, error, onSend }) {
       </header>
 
       <section className="flex-1 min-h-0 flex flex-col rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-        <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto px-6 py-6">
+        <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto px-3 sm:px-6 py-4 sm:py-6">
           {messages.length === 0 && (
             <div className="h-full flex flex-col items-center justify-center text-center gap-3">
               <div className="w-14 h-14 rounded-2xl bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center">
@@ -81,13 +81,13 @@ export function ChatView({ video, messages, isSending, error, onSend }) {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 p-4 shrink-0"
+          className="flex items-center gap-2 sm:gap-3 border-t border-slate-100 dark:border-slate-800 p-3 sm:p-4 shrink-0"
         >
           <input
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask anything about the video..."
-            className="flex-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm outline-none text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
+            className="flex-1 min-w-0 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm outline-none text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
           />
           <button
             type="submit"

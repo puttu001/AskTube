@@ -11,35 +11,37 @@ export function VideoLoader({ onLoad, isSubmitting }) {
   }
 
   return (
-    <div className="flex-1 flex items-center justify-center">
-    <section className="w-full max-w-4xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 relative overflow-hidden">
+    <div className="flex-1 flex items-center justify-center overflow-y-auto py-6">
+    <section className="w-full max-w-4xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-8 relative overflow-hidden">
       <div className="relative z-10 max-w-xl">
-        <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
+        <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
           Chat with any{" "}
           <span className="bg-gradient-to-r from-fuchsia-500 to-violet-600 bg-clip-text text-transparent">
             YouTube
           </span>{" "}
           video
         </h2>
-        <p className="mt-3 text-slate-500 dark:text-slate-400">
+        <p className="mt-3 text-sm sm:text-base text-slate-500 dark:text-slate-400">
           Paste a YouTube URL below to extract the transcript and start asking questions.
         </p>
 
         <form
           onSubmit={handleSubmit}
-          className="mt-6 flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 pl-4"
+          className="mt-6 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 sm:pl-4"
         >
-          <Link2 className="w-4 h-4 text-slate-400 shrink-0" />
-          <input
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="Paste YouTube URL here..."
-            className="flex-1 bg-transparent outline-none text-sm text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
-          />
+          <div className="flex items-center gap-2 flex-1 min-w-0 px-2 sm:px-0">
+            <Link2 className="w-4 h-4 text-slate-400 shrink-0" />
+            <input
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="Paste YouTube URL here..."
+              className="flex-1 min-w-0 bg-transparent outline-none text-sm text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
+            />
+          </div>
           <button
             type="submit"
             disabled={isSubmitting || !url.trim()}
-            className="rounded-xl bg-gradient-to-r from-fuchsia-500 to-violet-600 text-white text-sm font-semibold px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="rounded-xl bg-gradient-to-r from-fuchsia-500 to-violet-600 text-white text-sm font-semibold px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
           >
             {isSubmitting ? "Loading..." : "Load Video"}
           </button>
