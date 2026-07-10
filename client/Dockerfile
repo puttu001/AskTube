@@ -2,6 +2,12 @@ FROM node:20-slim AS build
 
 WORKDIR /app
 
+# Backend URL to bake into the build. Only needed when frontend and backend are
+# separate containers (e.g. docker-compose) on different ports — leave unset for
+# same-origin setups, where relative paths just work.
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 COPY package*.json ./
 RUN npm install
 

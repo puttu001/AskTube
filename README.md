@@ -121,7 +121,7 @@ docker compose up --build
 
 This builds and runs the backend and frontend as two containers, wired together automatically. First run takes a few minutes (installing dependencies inside the images); later runs are much faster.
 
-Open **http://localhost:5173** and paste a YouTube URL. The backend is reachable at `http://localhost:8000` if you want to check `/health` directly.
+Open **http://localhost:4321** and paste a YouTube URL. The backend is reachable at `http://localhost:8420` if you want to check `/health` directly. (Deliberately not 5173/8000 — those are common dev ports and more likely to already be taken by something else on your machine.)
 
 To stop: `Ctrl+C`, then `docker compose down`. Your data (SQLite + local vector store) persists in `server/data/` on your machine either way, since it's mounted as a volume rather than stored inside the container.
 
@@ -141,10 +141,10 @@ docker pull puttu001/asktube:latest
 Then, replacing `sk-...` with your own OpenAI API key:
 
 ```bash
-docker run -p 8000:8000 -e OPENAI_API_KEY=sk-... puttu001/asktube:latest
+docker run -p 8420:8000 -e OPENAI_API_KEY=sk-... puttu001/asktube:latest
 ```
 
-Open **http://localhost:8000** in your browser — that's the whole app.
+Open **http://localhost:8420** in your browser — that's the whole app. (You can map it to any host port you like by changing the number before the colon — 8420 here just avoids the common 8000/5173 defaults other tools often use.)
 
 ## Tech stack
 
