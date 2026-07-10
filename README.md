@@ -52,9 +52,13 @@ just you, and there's no account system to secure).
 
 ## Local setup
 
+Three ways to run it — pick whichever you have set up. All three run entirely on your machine.
+
+### Option A: Manual (Python + Node)
+
 **Prerequisites:** Python 3.12+, Node 18+, and an [OpenAI API key](https://platform.openai.com/api-keys).
 
-### 1. Clone and configure
+#### 1. Clone and configure
 
 ```bash
 git clone https://github.com/puttu001/AskTube.git
@@ -68,7 +72,7 @@ Open `.env` and add your key:
 OPENAI_API_KEY=sk-...
 ```
 
-### 2. Start the backend
+#### 2. Start the backend
 
 ```bash
 cd server
@@ -79,7 +83,7 @@ pip install -r requirements.txt
 uvicorn src.main:app --reload --port 8000
 ```
 
-### 3. Start the frontend
+#### 3. Start the frontend
 
 In a separate terminal:
 
@@ -90,6 +94,57 @@ npm run dev
 ```
 
 Open **http://localhost:5173** and paste a YouTube URL.
+
+### Option B: Docker Compose
+
+**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (includes Docker Compose), and an OpenAI API key. No Python or Node install needed — both run inside containers.
+
+#### 1. Clone and configure
+
+```bash
+git clone https://github.com/puttu001/AskTube.git
+cd AskTube
+cp .env.example .env
+```
+
+Open `.env` and add your key:
+
+```
+OPENAI_API_KEY=sk-...
+```
+
+#### 2. Build and start both services
+
+```bash
+docker compose up --build
+```
+
+This builds and runs the backend and frontend as two containers, wired together automatically. First run takes a few minutes (installing dependencies inside the images); later runs are much faster.
+
+Open **http://localhost:5173** and paste a YouTube URL. The backend is reachable at `http://localhost:8000` if you want to check `/health` directly.
+
+To stop: `Ctrl+C`, then `docker compose down`. Your data (SQLite + local vector store) persists in `server/data/` on your machine either way, since it's mounted as a volume rather than stored inside the container.
+
+### Option C: Run the published image (no clone needed)
+
+The easiest option — nothing to clone, no code to look at, no Docker Hub account or login
+needed. Just two commands and your API key.
+
+**Prerequisites:** [Docker](https://www.docker.com/products/docker-desktop/) installed, and an OpenAI API key.
+
+**Where to run the commands below:** open a terminal — on Windows, search for **Command Prompt** or **PowerShell** in the Start menu; on Mac, open the **Terminal** app. Type each command and press Enter.
+
+```bash
+docker pull puttu001/asktube:latest
+```
+
+Then, replacing `sk-...` with your own OpenAI API key:
+
+```bash
+docker run -p 8000:8000 -e OPENAI_API_KEY=sk-... puttu001/asktube:latest
+```
+
+Open **http://localhost:8000** in your browser — that's the whole app.
 
 ## Tech stack
 

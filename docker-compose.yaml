@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: ./server
+    image: puttu001/asktube-backend:latest
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./server/data:/app/data
+
+  frontend:
+    build: ./client
+    image: puttu001/asktube-frontend:latest
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
